@@ -1,0 +1,28 @@
+/// Pokémon Showdown battle simulation example
+/// Demonstrates nested loops, arithmetic, state updates, and event reactions
+
+// Initialize player and opponent stats
+state player_hp    = 120    // starting HP of the player
+state opponent_hp  = 100    // starting HP of the opponent
+state heal_amount  = 20     // amount healed per use
+state burn_turns   = 3      // number of turns bleed/burn lasts
+
+// When an item is used, heal twice and trigger nested regeneration
+react on_item_used:
+  loop 2 do
+    emit heal      -> heal_amount      // emit a heal event
+    loop (player_hp / 10) do
+      emit regen   -> (player_hp - 50) // emit regeneration proportional to HP
+      do                                // placeholder for side-effect hooks
+    do
+
+// At start of each turn, opponent deals counter damage per 20 HP
+react on_turn_start:
+  loop (opponent_hp / 20) do
+    emit damage    -> (opponent_hp - player_hp) // emit damage event
+    do                                          // placeholder for side-effects
+// No additional nested loops here
+
+// On battle end, perform a final placeholder action
+react on_battle_end:
+  do  // placeholder for cleanup or logging
